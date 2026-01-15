@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 // Sessions (for production: use a real session store + strong secret)
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "pulseforum_super_secret_session_key_2026",
+    secret: process.env.SESSION_SECRET || "dev-only-secret",
     resave: false,
     saveUninitialized: false,
     cookie: { httpOnly: true }
