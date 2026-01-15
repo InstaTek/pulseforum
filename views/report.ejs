@@ -1,0 +1,104 @@
+<%- include('partials/head', { title: 'Report a Peculiar Sighting' }) %>
+<%- include('partials/nav', { active: 'report' }) %>
+
+<section class="hero">
+  <div class="container heroCard">
+    <div class="heroInner">
+      <div>
+        <h1>Report a Peculiar Sighting</h1>
+        <p>
+          Ghost? Escaped magical animal? Something… else?
+          Fill this in and the local “Definitely Real Investigations Unit” will (probably) investigate.
+        </p>
+        <div class="pills">
+          <span class="pill">Accessible</span>
+          <span class="pill">Responsive</span>
+          <span class="pill">Saved to SQLite</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <a class="btn" href="/reports">Browse reports</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="container" style="padding: 18px 0 40px;">
+  <section class="card" aria-label="Sighting report form">
+    <div class="cardHeader">
+      <h2>Submit your report</h2>
+      <div class="meta">Fields marked * are required</div>
+    </div>
+
+    <div class="cardBody">
+      <% if (error) { %>
+        <div class="pill" role="alert" style="border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.12);">
+          <strong>Fix this:</strong> <%= error %>
+        </div>
+        <div style="height:12px;"></div>
+      <% } %>
+
+      <form method="post" action="/report" novalidate>
+        <div class="field">
+          <label for="reporter_name">Name *</label>
+          <input id="reporter_name" name="reporter_name" type="text" autocomplete="name"
+                 required minlength="2" value="<%= values.reporter_name %>" />
+        </div>
+
+        <div class="field">
+          <label for="contact">Contact (optional)</label>
+          <input id="contact" name="contact" type="text" autocomplete="email"
+                 placeholder="Email or phone (optional)" value="<%= values.contact %>" />
+        </div>
+
+        <fieldset class="field" style="border:0; padding:0; margin:0;">
+          <legend style="font-size:13px; color: rgba(255,255,255,0.65); margin-bottom:6px;">Type of report *</legend>
+
+          <select id="report_type" name="report_type" required
+                  style="width:100%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.18); color: rgba(255,255,255,0.92);">
+            <option value="ghost" <%= values.report_type === "ghost" ? "selected" : "" %>>Ghost sighting</option>
+            <option value="animal" <%= values.report_type === "animal" ? "selected" : "" %>>Escaped magical animal</option>
+            <option value="other" <%= values.report_type === "other" ? "selected" : "" %>>Other unusual occurrence</option>
+          </select>
+        </fieldset>
+
+        <div class="field" id="subject_wrap">
+          <label for="subject_choice" id="subject_label">Pick a ghost *</label>
+          <select id="subject_choice" name="subject_choice"
+                  style="width:100%; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.18); color: rgba(255,255,255,0.92);">
+            <!-- JS will populate -->
+          </select>
+          <div class="subline" id="subject_hint" style="margin-top:8px;">
+            Choose the closest match. If none fit, switch to “Other”.
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="occurred_at">Date & time *</label>
+          <input id="occurred_at" name="occurred_at" type="datetime-local" required value="<%= values.occurred_at %>" />
+        </div>
+
+        <div class="field">
+          <label for="location">Location *</label>
+          <input id="location" name="location" type="text" required minlength="2"
+                 placeholder="e.g. Whitby Abbey, Pier Road…" value="<%= values.location %>" />
+        </div>
+
+        <div class="field">
+          <label for="what_sighted">What happened? *</label>
+          <textarea id="what_sighted" name="what_sighted" required minlength="10"
+                    placeholder="Describe what you saw, heard, smelled, or felt…"><%= values.what_sighted %></textarea>
+          <div class="subline" style="margin-top:8px;">Tip: Include clothing, sounds, direction of travel, and witnesses.</div>
+        </div>
+
+        <div class="authActions">
+          <button class="btn primary" type="submit">Submit report</button>
+          <a class="btn" href="/reports">View recent reports</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<script src="/report-form.js" defer></script>
+<%- include('partials/footer') %>

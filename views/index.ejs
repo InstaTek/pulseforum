@@ -1,0 +1,112 @@
+<%- include('partials/head', { title: 'PulseForum — Home' }) %>
+<%- include('partials/nav', { active: 'home' }) %>
+
+<section class="hero">
+  <div class="container heroCard">
+    <div class="heroInner">
+      <div>
+        <h1>Measured discussion. Better threads.</h1>
+        <p>A real forum now: categories, topics, posts, and login.</p>
+        <div class="pills">
+          <span class="pill">Express</span>
+          <span class="pill">SQLite</span>
+          <span class="pill">Sessions</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <a class="btn primary" href="/">Browse</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="container grid">
+  <div style="display:grid; gap:18px;">
+    <section class="card">
+      <div class="cardHeader">
+        <h2>Categories</h2>
+        <div class="meta"><%= (categories || []).length %> boards</div>
+      </div>
+      <div class="cardBody">
+        <div class="categories">
+          <% categories.forEach(c => { %>
+            <a class="cat" href="/c/<%= c.id %>">
+              <div class="badge" aria-hidden="true"><%= c.name.slice(0,1).toUpperCase() %></div>
+              <div>
+                <h3><%= c.name %></h3>
+                <p><%= c.description %></p>
+                <span class="small"><%= c.topic_count %> topics</span>
+              </div>
+            </a>
+          <% }) %>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardHeader">
+        <h2>Latest topics</h2>
+        <div class="meta">Updated recently</div>
+      </div>
+
+      <div class="cardBody" style="padding:0;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:62%;">Topic</th>
+              <th style="width:12%;">Replies</th>
+              <th style="width:14%;">Category</th>
+              <th style="width:12%;">Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% latestTopics.forEach(t => { %>
+              <tr>
+                <td>
+                  <div class="topicTitle">
+                    <span class="dot" aria-hidden="true"></span>
+                    <div>
+                      <a href="/t/<%= t.id %>"><%= t.title %></a>
+                      <div class="subline">by <strong><%= t.author %></strong></div>
+                    </div>
+                  </div>
+                </td>
+                <td><%= t.replies %></td>
+                <td class="subline"><a href="/c/<%= t.category_id %>"><%= t.category_name %></a></td>
+                <td class="subline"><%= clampText(t.updated_at, 16) %></td>
+              </tr>
+            <% }) %>
+            <% if (latestTopics.length === 0) { %>
+              <tr><td colspan="4" class="subline" style="padding:14px;">No topics yet — create one!</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <aside style="display:grid; gap:18px;">
+    <section class="card">
+      <div class="cardHeader">
+        <h2>Forum stats</h2>
+        <div class="meta">Live</div>
+      </div>
+      <div class="cardBody kpi">
+        <div class="kpiItem">
+          <div class="label">Members</div>
+          <div class="value"><%= stats.members %></div>
+        </div>
+        <div class="kpiItem">
+          <div class="label">Topics</div>
+          <div class="value"><%= stats.topics %></div>
+        </div>
+        <div class="kpiItem">
+          <div class="label">Posts</div>
+          <div class="value"><%= stats.posts %></div>
+        </div>
+      </div>
+    </section>
+  </aside>
+</main>
+
+<%- include('partials/footer') %>

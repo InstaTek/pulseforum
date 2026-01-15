@@ -1,0 +1,63 @@
+<%- include('partials/head', { title: 'PulseForum — Categories' }) %>
+<%- include('partials/nav', { active: 'categories' }) %>
+
+<section class="hero">
+  <div class="container heroCard">
+    <div class="heroInner">
+      <div>
+        <h1>Categories</h1>
+        <p>Browse boards and jump into the right place for your topic.</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <a class="btn" href="/">Back to home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="container grid" style="padding: 18px 0 40px;">
+  <div class="card" aria-label="Categories list">
+    <div class="cardHeader">
+      <h2>All categories</h2>
+      <div class="meta"><%= categories.length %> boards</div>
+    </div>
+
+    <div class="cardBody">
+      <div class="categories">
+        <% categories.forEach(c => { %>
+          <a class="cat" href="/c/<%= c.id %>">
+            <div class="badge" aria-hidden="true"><%= c.name.slice(0,1).toUpperCase() %></div>
+            <div>
+              <h3><%= c.name %></h3>
+              <p><%= c.description %></p>
+              <span class="small"><%= c.topic_count %> topics</span>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <aside class="card" aria-label="Forum stats">
+    <div class="cardHeader">
+      <h2>Forum stats</h2>
+      <div class="meta">Live</div>
+    </div>
+    <div class="cardBody kpi">
+      <div class="kpiItem">
+        <div class="label">Members</div>
+        <div class="value"><%= stats.members %></div>
+      </div>
+      <div class="kpiItem">
+        <div class="label">Topics</div>
+        <div class="value"><%= stats.topics %></div>
+      </div>
+      <div class="kpiItem">
+        <div class="label">Posts</div>
+        <div class="value"><%= stats.posts %></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,68 @@
+<%- include('partials/head', { title: 'Recent Reports' }) %>
+<%- include('partials/nav', { active: 'reports' }) %>
+
+<section class="hero">
+  <div class="container heroCard">
+    <div class="heroInner">
+      <div>
+        <h1>Recent Reports</h1>
+        <p>Browse the latest strange happenings. (Totally normal behaviour.)</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <a class="btn primary" href="/report">Submit a report</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="container" style="padding: 18px 0 40px;">
+  <% if (submitted) { %>
+    <div class="pill" role="status" style="border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.12); margin-bottom:14px;">
+      Report submitted ✅ The unit has been notified (by vibes).
+    </div>
+  <% } %>
+
+  <section class="card">
+    <div class="cardHeader">
+      <h2>Latest 50</h2>
+      <div class="meta"><a href="/report">New report</a></div>
+    </div>
+
+    <div class="cardBody" style="padding:0;">
+      <table class="table" aria-label="Recent reports">
+        <thead>
+          <tr>
+            <th style="width:22%;">Type</th>
+            <th style="width:22%;">Location</th>
+            <th style="width:18%;">When</th>
+            <th style="width:38%;">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% reports.forEach(r => { %>
+            <tr>
+              <td>
+                <strong>
+                  <%= r.report_type === 'ghost' ? 'Ghost' : (r.report_type === 'animal' ? 'Magical Animal' : 'Other') %>
+                </strong>
+                <% if (r.subject_choice) { %>
+                  <div class="subline"><%= r.subject_choice %></div>
+                <% } %>
+                <div class="subline">by <%= r.reporter_name %></div>
+              </td>
+              <td><%= r.location %></td>
+              <td class="subline"><%= r.occurred_at %></td>
+              <td class="subline"><%= r.snippet %><%= r.snippet.length >= 180 ? "…" : "" %></td>
+            </tr>
+          <% }) %>
+
+          <% if (reports.length === 0) { %>
+            <tr><td colspan="4" class="subline" style="padding:14px;">No reports yet. Go find something weird.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

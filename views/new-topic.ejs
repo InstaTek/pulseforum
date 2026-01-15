@@ -1,0 +1,43 @@
+<%- include('partials/head', { title: `New Topic — ${category.name}` }) %>
+<%- include('partials/nav', { active: 'categories' }) %>
+
+<main id="main" class="container" style="padding: 18px 0 40px;">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> / <a href="/c/<%= category.id %>"><%= category.name %></a> / <span>New topic</span>
+  </div>
+
+  <section class="card">
+    <div class="cardHeader">
+      <h2>Create a new topic</h2>
+      <div class="meta"><%= category.name %></div>
+    </div>
+
+    <div class="cardBody">
+      <% if (error) { %>
+        <div class="pill" style="border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.12);">
+          <strong>Error:</strong> <%= error %>
+        </div>
+        <div style="height:10px;"></div>
+      <% } %>
+
+      <form method="post" action="/c/<%= category.id %>/new">
+        <div class="field">
+          <label for="title">Title</label>
+          <input id="title" name="title" type="text" placeholder="A clear, specific title…" required />
+        </div>
+
+        <div class="field">
+          <label for="content">First post</label>
+          <textarea id="content" name="content" placeholder="Write the opening message…" required></textarea>
+        </div>
+
+        <div class="authActions">
+          <button class="btn primary" type="submit">Create topic</button>
+          <a class="btn" href="/c/<%= category.id %>">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

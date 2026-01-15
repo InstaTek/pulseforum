@@ -1,0 +1,35 @@
+<%- include('partials/head', { title: 'PulseForum — Log in' }) %>
+<%- include('partials/nav', { active: '' }) %>
+
+<main class="authWrap">
+  <section class="authCard" aria-label="Login form">
+    <h1>Log in</h1>
+    <p>Welcome back.</p>
+
+    <% if (error) { %>
+      <div class="pill" style="border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.12);">
+        <strong>Error:</strong> <%= error %>
+      </div>
+      <div style="height:10px;"></div>
+    <% } %>
+
+    <form method="post" action="/login">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="••••••••" required />
+      </div>
+
+      <div class="authActions">
+        <button class="btn primary" type="submit">Log in</button>
+        <a class="mutedLink" href="/register">Create account</a>
+      </div>
+    </form>
+  </section>
+</main>
+
+</body></html>

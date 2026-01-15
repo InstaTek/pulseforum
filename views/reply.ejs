@@ -1,0 +1,38 @@
+<%- include('partials/head', { title: `Reply — ${topic.title}` }) %>
+<%- include('partials/nav', { active: '' }) %>
+
+<main id="main" class="container" style="padding: 18px 0 40px;">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> / <a href="/t/<%= topic.id %>"><%= topic.title %></a> / <span>Reply</span>
+  </div>
+
+  <section class="card">
+    <div class="cardHeader">
+      <h2>Reply</h2>
+      <div class="meta"><%= topic.title %></div>
+    </div>
+
+    <div class="cardBody">
+      <% if (error) { %>
+        <div class="pill" style="border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.12);">
+          <strong>Error:</strong> <%= error %>
+        </div>
+        <div style="height:10px;"></div>
+      <% } %>
+
+      <form method="post" action="/t/<%= topic.id %>/reply">
+        <div class="field">
+          <label for="content">Your reply</label>
+          <textarea id="content" name="content" placeholder="Type your reply…" required></textarea>
+        </div>
+
+        <div class="authActions">
+          <button class="btn primary" type="submit">Post reply</button>
+          <a class="btn" href="/t/<%= topic.id %>">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

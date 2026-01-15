@@ -1,0 +1,53 @@
+<%- include('partials/head', { title: `PulseForum — ${topic.title}` }) %>
+<%- include('partials/nav', { active: '' }) %>
+
+<main id="main" class="container" style="padding: 18px 0 40px;">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> / <a href="/c/<%= topic.category_id %>"><%= topic.category_name %></a> / <span><%= topic.title %></span>
+  </div>
+
+  <div class="heroCard" style="padding:16px;">
+    <h1 class="threadTitle"><%= topic.title %></h1>
+    <div class="threadMeta">Started by <strong><%= topic.author %></strong> • Updated <%= topic.updated_at %></div>
+    <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+      <% if (user) { %>
+        <a class="btn primary" href="/t/<%= topic.id %>/reply">Reply</a>
+      <% } else { %>
+        <a class="btn primary" href="/login">Log in to reply</a>
+      <% } %>
+      <a class="btn" href="/c/<%= topic.category_id %>">Back</a>
+    </div>
+  </div>
+
+  <section style="margin-top:18px;">
+    <% posts.forEach((p, idx) => { %>
+      <article class="post" aria-label="Post <%= idx + 1 %>">
+        <aside class="postSide">
+          <div class="userCard">
+            <div class="avatar" aria-hidden="true"><%= p.username.slice(0,1).toUpperCase() %></div>
+            <div class="u">
+              <strong><%= p.username %></strong>
+              <span><%= p.role === 'admin' ? 'Moderator' : 'Member' %></span>
+            </div>
+          </div>
+          <div class="userStats">
+            <div>Posted: <%= p.created_at %></div>
+          </div>
+        </aside>
+
+        <div class="postMain">
+          <% p.content.split('\n').forEach(line => { %>
+            <p><%= line %></p>
+          <% }) %>
+
+          <div class="postBar">
+            <span>Post #<%= idx + 1 %></span>
+            <span><a href="/t/<%= topic.id %>/reply">Reply</a></span>
+          </div>
+        </div>
+      </article>
+    <% }) %>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

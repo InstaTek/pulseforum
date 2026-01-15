@@ -1,0 +1,37 @@
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="/">
+      <span class="logo" aria-hidden="true"></span>
+      <span>PulseForum</span>
+    </a>
+
+    <nav class="navlinks" aria-label="Primary">
+      <a class="<%= active === 'home' ? 'active' : '' %>" href="/">Home</a>
+      <a class="<%= active === 'categories' ? 'active' : '' %>" href="/categories">Categories</a>
+      <a class="<%= active === 'report' ? 'active' : '' %>" href="/report">Report</a>
+      <a class="<%= active === 'reports' ? 'active' : '' %>" href="/reports">Reports</a>
+
+    </nav>
+
+    <div class="actions">
+      <form class="search" action="#" role="search" aria-label="Search forums">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" opacity="0.8"
+            d="M10 18a8 8 0 1 1 5.293-14.043A8 8 0 0 1 10 18Zm11.707 2.293-4.31-4.31a10 10 0 1 1 1.414-1.414l4.31 4.31a1 1 0 0 1-1.414 1.414Z"/>
+        </svg>
+        <input type="search" placeholder="Search topics…" />
+        <span class="k">Ctrl K</span>
+      </form>
+
+      <% if (user) { %>
+        <span class="pill">Hi, <strong><%= user.username %></strong></span>
+        <form action="/logout" method="post" style="display:inline;">
+          <button class="btn" type="submit">Log out</button>
+        </form>
+      <% } else { %>
+        <a class="btn" href="/login">Log in</a>
+        <a class="btn primary" href="/register">Create account</a>
+      <% } %>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,66 @@
+<%- include('partials/head', { title: `PulseForum — ${category.name}` }) %>
+<%- include('partials/nav', { active: 'categories' }) %>
+
+<main id="main" class="container" style="padding: 18px 0 40px;">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> / <span><%= category.name %></span>
+  </div>
+
+  <div class="heroCard" style="padding:16px;">
+    <div class="heroInner">
+      <div>
+        <h1 class="threadTitle" style="margin:0;"><%= category.name %></h1>
+        <div class="threadMeta"><%= category.description %></div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <% if (user) { %>
+          <a class="btn primary" href="/c/<%= category.id %>/new">New topic</a>
+        <% } else { %>
+          <a class="btn primary" href="/login">Log in to post</a>
+        <% } %>
+        <a class="btn" href="/">Back</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="card" style="margin-top:18px;">
+    <div class="cardHeader">
+      <h2>Topics</h2>
+      <div class="meta">Sorted by latest activity</div>
+    </div>
+
+    <div class="cardBody" style="padding:0;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width:70%;">Topic</th>
+            <th style="width:15%;">Replies</th>
+            <th style="width:15%;">Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% topics.forEach(t => { %>
+            <tr>
+              <td>
+                <div class="topicTitle">
+                  <span class="dot" aria-hidden="true"></span>
+                  <div>
+                    <a href="/t/<%= t.id %>"><%= t.title %></a>
+                    <div class="subline">by <strong><%= t.author %></strong></div>
+                  </div>
+                </div>
+              </td>
+              <td><%= t.replies %></td>
+              <td class="subline"><%= t.updated_at %></td>
+            </tr>
+          <% }) %>
+          <% if (topics.length === 0) { %>
+            <tr><td colspan="3" class="subline" style="padding:14px;">No topics yet — be the first.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
