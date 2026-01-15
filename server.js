@@ -1,4 +1,6 @@
 // server.js
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Forum running on port ${PORT}`));
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
