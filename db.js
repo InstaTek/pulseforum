@@ -59,6 +59,37 @@ function init() {
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
   `);
+
+  // ✅ SEED DEFAULT CATEGORIES (runs once)
+  const count = db.prepare(
+    "SELECT COUNT(*) AS c FROM categories"
+  ).get().c;
+
+  if (count === 0) {
+    const insert = db.prepare(
+      "INSERT INTO categories (name, description) VALUES (?, ?)"
+    );
+
+    insert.run(
+      "General",
+      "Introductions, announcements, and community updates."
+    );
+
+    insert.run(
+      "Build Logs",
+      "Project diaries, photos, and progress updates."
+    );
+
+    insert.run(
+      "Help & Support",
+      "Ask questions, share solutions, and report issues."
+    );
+
+    insert.run(
+      "Tips & Guides",
+      "Write-ups, checklists, and best practices."
+    );
+  }
 }
 
 module.exports = { db, init };
