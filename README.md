@@ -4,9 +4,8 @@ Overview:
   PulseForum is a web-based reporting system that allows users to submit and view reports of unusual or “peculiar” sightings, such as ghosts, escaped magical animals, or other unexplained events. The application has been developed to meet the requirements of the Report a Peculiar Sighting assessment brief as part of a Level 4 Software Developer apprenticeship.
   The system demonstrates server-side development, form handling, data validation, database interaction, and deployment to a public hosting platform.
 
-Features
+Features:
   Report a Sighting
-
   Users can submit a sighting report that includes:
     Reporter name (required)
     Optional contact details
